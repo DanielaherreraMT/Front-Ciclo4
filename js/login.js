@@ -1,19 +1,19 @@
 const urlbase = "http://129.151.102.175:8080/api/user";
 
 const crear = () => {
-    //document.getElementById('txtNombre').value;
     const nombre = $.trim($('#name').val());
     const email = $.trim($('#email').val());
     const password = $.trim($('#pass').val());
     const confirmar = $.trim($('#pass2').val());
 
     if (password.length < 6){        
-        mostrarMensaje("Error", "La contraseñas no coinciden", true); // Con errores
-        alert("La contraseña debe tener mínimo 6 caracteres");
+        mostrarMensaje('Error', 'La clave debe tener minimo 6 caracteres', true);
+        // alert("La contraseña debe tener mínimo 6 caracteres");
         return;
     } else if (password !== confirmar) {
-        mostrarMensaje("Error", "La clave debe tener minimo 6 caracteres", true); // Con errores
-        alert("Las contraseñas no coinciden");
+        mostrarMensaje("Error", "La contraseñas no coinciden", true);
+        // alert("Las contraseñas no coinciden");
+        return;
     } else {
       const payload = {
         name: nombre,
@@ -30,8 +30,8 @@ const crear = () => {
         },
         statusCode: {
           201: function () {
-            mostrarMensaje("Confirmacion", "Usuario  creado exitosamente"); // Con errores
-            alert("Usuario Creado");
+            mostrarMensaje('Confirmacion', 'Usuario  creado exitosamente', false);
+            // alert("Usuario Creado");
           },
         },
       });
@@ -55,7 +55,6 @@ const mostrarMensaje = (titulo, cuerpo, error) => {
 const iniciarSesion = () => {
     //const loading = '<img src="https://icon-library.com/icon/spinner-icon-gif-10.html">';
     //$("#loading").html(loading);
-
     setTimeout(() => {
         autenticar();
     }, 2000);
