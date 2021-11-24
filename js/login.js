@@ -1,14 +1,16 @@
-const urlbase = 'http://localhost:8080/api/Reto1';
+const urlbase = "http://129.151.102.175:8080/api/user";
 
 const crear = () => {
     //document.getElementById('txtNombre').value;
-    const nombre = $('#txtNombre').val();
-    const email = $('#txtEmail').val();
-    const password = $('#txtPassword').val();
-    const confirmar = $('#txtConfirmarPassword').val();
+    const nombre = $('#name').val();
+    const email = $('#email').val();
+    const password = $('#pass').val();
+    const confirmar = $('#pass2').val();
+    console.log(email)
 
     if (password !== confirmar) {
         mostrarMensaje('Error', 'La contraseñas no coinciden', true);
+        alert("Hola")
         return;
     } else if (password.length < 6) {
         mostrarMensaje('Error', 'La clave debe tener minimo 6 caracteres', true);
@@ -24,15 +26,15 @@ const crear = () => {
     $.ajax({
         url: `${urlbase}/new`,
         type: "POST",
+        data: JSON.stringify(payload),
         dataType: 'json',
         headers: {
             "Content-Type": "application/json"
         },
-        data: JSON.stringify(payload),
         statusCode: {
             201: function () {
                 mostrarMensaje('Confirmacion', 'Usuario  creado exitosamente');
-                //alert('Usuario Creado');
+                alert('Usuario Creado');
             }
         },
     });
@@ -62,8 +64,9 @@ const iniciarSesion = () => {
 }
 
 const autenticar = ()=>{
-    const email = $("#txtEmail").val();
-    const password = $("#txtPassword").val();
+    const email = $("#email").val();
+    const password = $("#pass").val();
+    console.log(email)
 
     if (email.length === 0 || password.length === 0) {
         mostrarMensaje('Error', 'Debe escribir el email y el password para ingresar', true);
