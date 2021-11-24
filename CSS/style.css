@@ -21,3 +21,15 @@ body {
   width: 150px;
 }
 
+.m-sm-4 {
+  margin: 0.9rem 1.5rem !important;
+}
+
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 20px;
+}
+
