@@ -1,6 +1,10 @@
 // Url del end-point rest
 const urlbase = "http://localhost:8080/api/user";
 
+// RegEx para validar un direccion de email
+const regExEmail =
+    /^(([^<>()\[\]\\.,;:\s@”]+(\.[^<>()\[\]\\.,;:\s@”]+)*)|(“.+”))@((\[[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}])|(([a-zA-Z\-0–9]+\.)+[a-zA-Z]{2,}))$/;
+
 // Se llama cada que se quiera mostrar mensaje de error/confirmacion emergente
 const mostrarMensaje = (titulo, cuerpo, error) => {
     document.getElementById("titulomensaje").innerHTML = titulo;
@@ -20,4 +24,4 @@ function campoEstaVacio(valor) {
     return (valor === null || valor.trim() === "");
 }
 
-export { mostrarMensaje, campoEstaVacio , urlbase};
+export { mostrarMensaje, campoEstaVacio, urlbase, regExEmail };

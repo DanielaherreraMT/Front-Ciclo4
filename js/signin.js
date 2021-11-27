@@ -1,4 +1,4 @@
-import { mostrarMensaje, campoEstaVacio, urlbase } from "./utils.js";
+import { mostrarMensaje, campoEstaVacio, urlbase ,regExEmail} from "./utils.js";
 
 // Valida los atributos del usuario, entonces lo guarda
 $(document).ready(function () {
@@ -46,8 +46,6 @@ $(document).ready(function () {
 
 // Valida que el email sea valido, la obligatoriedad de los campos, que las contraseñas coincidan y su longitud
 function validaUsuario(nombre, email, password, confirmar) {
-    const regExEmail =
-        /^(([^<>()\[\]\\.,;:\s@”]+(\.[^<>()\[\]\\.,;:\s@”]+)*)|(“.+”))@((\[[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}])|(([a-zA-Z\-0–9]+\.)+[a-zA-Z]{2,}))$/;
 
     if (
         campoEstaVacio(nombre) === true || campoEstaVacio(email) === true ||
