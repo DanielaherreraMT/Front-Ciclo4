@@ -16,11 +16,6 @@ body {
   animation: login 1s ease-in-out;
 }
 
-#avatar {
-  border-radius: 6px;
-  width: 150px;
-}
-
 .m-sm-4 {
   margin: 0.9rem 1.5rem !important;
 }
