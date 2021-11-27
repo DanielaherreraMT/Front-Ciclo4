@@ -16,11 +16,6 @@ body {
   animation: login 1s ease-in-out;
 }
 
-#avtar {
-  border-radius: 6px;
-  width: 150px;
-}
-
 .m-sm-4 {
   margin: 0.9rem 1.5rem !important;
 }
@@ -30,6 +25,8 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  margin: 20px;
 }
 
+.letra-gris{
+  color: gray;
+}

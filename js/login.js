@@ -1,98 +1,41 @@
-const urlbase = "http://129.151.102.175:8080/api/user";
+import { mostrarMensaje, campoEstaVacio, urlbase, regExEmail } from "./utils.js";
 
-const crear = () => {
-    const nombre = $.trim($('#name').val());
-    const email = $.trim($('#email').val());
-    const password = $.trim($('#pass').val());
-    const confirmar = $.trim($('#pass2').val());
-
-    if (password.length < 6){        
-        mostrarMensaje('Error', 'La clave debe tener minimo 6 caracteres', true);
-        // alert("La contraseña debe tener mínimo 6 caracteres");
-        return;
-    } else if (password !== confirmar) {
-        mostrarMensaje("Error", "La contraseñas no coinciden", true);
-        // alert("Las contraseñas no coinciden");
-        return;
-    } else {
-      const payload = {
-        name: nombre,
-        email: email,
-        password: password,
-      };
-      $.ajax({
-        url: `${urlbase}/new`,
-        type: "POST",
-        data: JSON.stringify(payload),
-        dataType: "json",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        statusCode: {
-          201: function () {
-            mostrarMensaje('Confirmacion', 'Usuario  creado exitosamente', false);
-            // alert("Usuario Creado");
-          },
-        },
-      });
-    }
-}
-
-const mostrarMensaje = (titulo, cuerpo, error) => {
-    //console.log("error",error);
-    document.getElementById("titulomensaje").innerHTML = titulo;
-    $("#cuerpomensaje").html(cuerpo);
-    $("#myToast").removeClass();
-    if (error) {
-        $("#myToast").addClass("toast bg-danger")
-    } else {
-        $("#myToast").addClass("toast bg-primary")
-    }
-
-    $("#myToast").toast("show");
-}
-
-const iniciarSesion = () => {
-    //const loading = '<img src="https://icon-library.com/icon/spinner-icon-gif-10.html">';
-    //$("#loading").html(loading);
-    setTimeout(() => {
-        autenticar();
-    }, 2000);
-}
-
-const autenticar = () => {
+// Se ejecuta cuando se da click en "Ingresar" valida, entonces valida que un usuario existe
+$(document).ready(function () {
+  $("#btn-login").click(function () {
     const email = $.trim($("#email").val());
-    const password = $.trim($("#pass").val());
-    console.log(email)
+    const password = $("#pass").val()
 
-    if (email === "" || password === "") {
-        mostrarMensaje('Error', 'Debe escribir el email y el password para ingresar', true);
-        $("#loading").html("");
-        return;
-    }else {
-      $.ajax({
-        url: `${urlbase}/${email}/${password}`,
-        type: "GET",
-        dataType: "json",
-        success: function (respuesta) {
+    if (validaDatosLogin(email, password) === true) {
+      $.ajax(
+        {
+          url: `${urlbase}/${email}/${password}`,
+          type: "GET",
+          dataType: "json",
+        })
+        .done(function (user) {
           $("#loading").html("");
-          console.log(respuesta);
-          if (respuesta.id === null) {
-            mostrarMensaje("Error", "Usuario y/o clave incorrectos", true);
+          if (user.id === null) {
+            mostrarMensaje("Error", "Usuario o contraseña incorrectos", true);
           } else {
-            mostrarMensaje("Bienvenido", "Ingreso Correcto");
-
-            setTimeout(() => {
-              //window.location.href = 'login.html'; //redireccionamiento a página principal del usuario
-            }, 1000);
+            mostrarMensaje("Bienvenido", "Bienvenido " + user.name);
           }
-        },
-        error: function (xhr, status) {
-          $("#loading").html("");
-          console.log(xhr);
-          console.log(status);
-          mostrarMensaje("Error", "Error al validar", true);
-        },
-      });
+        });
     }
+  })
+})
+
+// Regresa boolean, valida los campos form login
+function validaDatosLogin(email, password) {
+  if (campoEstaVacio(email) === true || campoEstaVacio(password) === true) {
+    mostrarMensaje('Error', 'El email y la contraseña son requeridos para ingresar', true);
+    return false;
+  } else if (regExEmail.test(email) === false) {
+    mostrarMensaje(
+      "Error",
+      "El formato de email es inválido, verifiquelo e intente de nuevo",
+      true);
+    return false;
+  }
+  return true
 }
